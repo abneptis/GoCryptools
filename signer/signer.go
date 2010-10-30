@@ -16,11 +16,7 @@ func Sign64(s Signer, e *base64.Encoding, sts []byte)(out []byte, err os.Error){
   sig, err := s.Sign(sts)
   if err != nil { return }
   out = make([]byte, e.EncodedLen(len(sig)))
-  wr := bytes.NewBuffer(out)
-  enc := base64.NewEncoder(e, wr)
-  defer enc.Close()
-  _, err = enc.Write(sig)
-  if err != nil { return }
+  e.Encode(out, sig)
   return
 }
 
