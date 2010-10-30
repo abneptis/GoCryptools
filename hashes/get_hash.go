@@ -1,5 +1,10 @@
 package hashes
 
+/* 
+  Copyright (c) 2010, Abneptis LLC.
+  See COPYRIGHT and LICENSE for details.
+*/
+
 import "crypto/hmac"
 import "crypto/md4"
 import "crypto/md5"
