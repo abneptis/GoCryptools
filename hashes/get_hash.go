@@ -24,6 +24,14 @@ var Sha384 = func()(hash.Hash){ return sha512.New384() }
 var Sha512 = func()(hash.Hash){ return sha512.New() }
 var ErrUnknownHash = os.NewError("Unknown Hash")
 
+
+/* Return a hash creation function based on a string;
+   This function is case-insensitive, and currently accepts
+   MD(4|5) and SHA(1|256|384|512)
+
+   - If someone can confirm SHA==SHA1, I'll accept that as a
+     name as well.
+*/
 func GetHashFunc(n string)(hf func()(hash.Hash), err os.Error){
   switch strings.ToLower(n) {
     case "md4": hf =  Md4
@@ -37,6 +45,8 @@ func GetHashFunc(n string)(hf func()(hash.Hash), err os.Error){
   return
 }
 
+/* Returns a newly created hash function based on the name.
+   (See GetHashFunc for details). */
 func GetHash(n string)(h hash.Hash, err os.Error){
   f, err := GetHashFunc(n)
   if err != nil { return }
@@ -44,6 +54,9 @@ func GetHash(n string)(h hash.Hash, err os.Error){
   return
 }
 
+/* Return a newly created HMAC hash.Hash instance with a corresponding
+  key.
+*/
 func GetHmac(n string, key []byte)(h hash.Hash, err os.Error){
   hf, err := GetHashFunc(n)
   if err != nil { return }
