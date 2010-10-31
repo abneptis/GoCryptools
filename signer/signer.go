@@ -1,3 +1,11 @@
+// Interface and helper functions for (hmac) signatures
+//
+// Signer creates a Sign() and Verify() function for cryptographic
+// APIs
+//
+// NB: Verify may be removed from the Signer interface
+// and replaced with an module function in the near
+// future.
 package signer
 
 /* 

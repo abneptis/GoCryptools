@@ -1,3 +1,11 @@
+// Hash and Hmac string selector functions
+//
+// Hashes contains utility functions for selecting
+// hash functions from a string name.
+//
+// For this to be useful outside of the AWS package,
+// parsing beynd the hash function type will probably
+// be needed
 package hashes
 
 /* 
