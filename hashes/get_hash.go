@@ -43,7 +43,7 @@ var ErrUnknownHash = os.NewError("Unknown Hash")
 func GetHashFunc(n string)(hf func()(hash.Hash), err os.Error){
   switch strings.ToLower(n) {
     case "md4": hf =  Md4
-    case "md5": hf =  Md4
+    case "md5": hf =  Md5
     case "sha1": hf =  Sha1
     case "sha256": hf =  Sha256
     case "sha384": hf =  Sha384
