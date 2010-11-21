@@ -29,6 +29,7 @@ func ValidMech(m string, mm multiMech)(err os.Error){
 
 type VerifierMultiMech interface {
   multiMech
+  SignerID()(string)
   Verify(string, []byte, []byte)(os.Error)
 }
 
