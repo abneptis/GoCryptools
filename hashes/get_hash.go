@@ -73,6 +73,8 @@ func GetHmac(n string, key []byte)(h hash.Hash, err os.Error){
   return
 }
 
+// Returns the appropriate rsa.PKCS1v15Hash constant based on
+// a string describing the algorithm.
 func GetPKCS15Hash(n string)(out rsa.PKCS1v15Hash, err os.Error){
   switch strings.ToLower(n) {
     case "md5": out = rsa.HashMD5
