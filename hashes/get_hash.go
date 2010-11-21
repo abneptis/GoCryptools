@@ -19,6 +19,7 @@ import "crypto/md5"
 import "crypto/sha1"
 import "crypto/sha256"
 import "crypto/sha512"
+import "crypto/rsa"
 
 import "hash"
 import "strings"
@@ -69,5 +70,18 @@ func GetHmac(n string, key []byte)(h hash.Hash, err os.Error){
   hf, err := GetHashFunc(n)
   if err != nil { return }
   h = hmac.New(hf, key)
+  return
+}
+
+func GetPKCS15Hash(n string)(out rsa.PKCS1v15Hash, err os.Error){
+  switch strings.ToLower(n) {
+    case "md5": out = rsa.HashMD5
+    case "sha1": out = rsa.HashSHA1
+    case "sha256": out = rsa.HashSHA256
+    case "sha384": out = rsa.HashSHA384
+    case "sha512": out = rsa.HashSHA512
+    case "md5sha1": out = rsa.HashMD5SHA1
+    default: err = os.NewError("Unknown PKCSv15 algorithm")
+  }
   return
 }
