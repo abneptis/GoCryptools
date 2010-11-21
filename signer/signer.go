@@ -20,6 +20,10 @@ import "os"
 /* A simple interface for signing and verifying HMAC signatures */
 type Signer interface {
   Sign([]byte)([]byte, os.Error)
+  Verifier
+}
+
+type Verifier interface {
   Verify([]byte, []byte)(os.Error)
 }
 
