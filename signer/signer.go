@@ -23,6 +23,11 @@ type Signer interface {
   Verifier
 }
 
+type NamedSigner interface {
+  Signer
+  SignerName()(string)
+}
+
 type Verifier interface {
   Verify([]byte, []byte)(os.Error)
 }
