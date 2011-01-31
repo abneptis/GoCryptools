@@ -13,50 +13,56 @@ package signer
   See COPYRIGHT and LICENSE for details.
 */
 
-import "bytes"
+
+import "com.abneptis.oss/cryptools"
+
 import "encoding/base64"
 import "os"
 
 /* A simple interface for signing and verifying HMAC signatures */
+// DEPRECATED: Use cryptools.Signer
 type Signer interface {
-  Sign([]byte)([]byte, os.Error)
-  Verifier
+  cryptools.Signer
 }
 
+// DEPRECATED: Use cryptools.NamedSigner
 type NamedSigner interface {
-  Signer
-  SignerName()(string)
+  cryptools.NamedSigner
 }
 
+// DEPRECATED: Use crptools.Verifier
 type Verifier interface {
-  Verify([]byte, []byte)(os.Error)
+  cryptools.Verifier
 }
 
 var SignatureVerificationFailed = os.NewError("Signature Verification Failed")
 
 // Sign a string with a specified signer and base64 encoding
-func Sign64(s Signer, e *base64.Encoding, sts []byte)(out []byte, err os.Error){
-  sig, err := s.Sign(sts)
+func Sign64(s Signer, e *base64.Encoding,
+            ss cryptools.Signable)(out []byte, err os.Error){
+
+  sig, err := s.Sign(ss)
   if err != nil { return }
-  out = make([]byte, e.EncodedLen(len(sig)))
-  e.Encode(out, sig)
+  bb := sig.Bytes()
+  out = make([]byte, e.EncodedLen(len(bb)))
+  e.Encode(out, bb)
   return
 }
 
 // Executes Sign(), however uses strings rather than the native
 // []byte types.
 func SignString(s Signer, n string)(out string, err os.Error){
-  bb := bytes.NewBufferString(n)
-  bo, err := s.Sign(bb.Bytes())
-  if err == nil { out = string(bo) }
+  bo, err := s.Sign(SignableString(n))
+  if err == nil { out = string(bo.Bytes()) }
   return
 }
 
 // Return a signature encoded in base64 (with the encoding
 // specified by the caller)
-func SignString64(s Signer, e *base64.Encoding, sts string)(out string, err os.Error){
-  bb := bytes.NewBufferString(sts)
-  bo, err := Sign64(s, e, bb.Bytes())
+func SignString64(s Signer, e *base64.Encoding,
+                  so cryptools.Signable)(out string, err os.Error){
+
+  bo, err := Sign64(s, e, so)
   if err == nil { out = string(bo) }
   return
 }
