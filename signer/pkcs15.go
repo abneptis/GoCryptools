@@ -1,4 +1,4 @@
-package signer
+package cryptools
 
 import "com.abneptis.oss/cryptools/hashes"
 

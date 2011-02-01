@@ -3,7 +3,7 @@
 // Signer creates a Sign() and Verify() function for cryptographic
 // APIs
 
-package signer
+package cryptools
 
 /* 
   Copyright (c) 2010, Abneptis LLC.

@@ -5,3 +5,13 @@ package cryptools
 type Signature interface {
   SignatureBytes()([]byte)
 }
+
+func NewSignature(b []byte)(Signature){
+  return signature(b)
+}
+
+type signature []byte
+
+func (self signature)SignatureBytes()([]byte){
+  return []byte(self)
+}
